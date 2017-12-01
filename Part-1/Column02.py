@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 
-#scrip to clean CreatedDate- column 2
-
-#import numpy as np
-
+#script to clean CreatedDate(#2)
 import sys
 from pyspark import SparkContext
 import csv
