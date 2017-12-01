@@ -40,7 +40,7 @@ def getDataType(key):
             continue
      #Not a match
     val="str,ZipCode,invalid"
-    return x,val
+    return key,val
 
 
 if __name__ == "__main__":
