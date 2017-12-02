@@ -8,6 +8,8 @@ from pyspark.sql.functions import count,length,col
 
 df = sql_c.read.format('com.databricks.spark.csv').options(header='true', inferschema='true').load('/user/sdv267/new_311.csv')
 
+
+
 #Finding invalid Zip Codes
 df.where(length(col('Incident Zip')) > 0).select(col('Incident Zip')).filter(col('Incident Zip').rlike('^\d{5}(?:[-\s]\d{4})?$')!=True).groupBy('Incident Zip').count().show()
 '''
@@ -28,6 +30,8 @@ df.where(length(col('Incident Zip')) > 0).select(col('Incident Zip')).filter(col
 |         103|    1|
 +------------+-----+
 '''
+
+
 #Finding Unspecified Borough entries
 df.where(col('Borough').isin("BRONX","BROOKLYN","MANHATTAN","STATEN ISLAND","QUEENS")!=True).groupBy('Borough').count().show()
 '''
@@ -37,4 +41,9 @@ df.where(col('Borough').isin("BRONX","BROOKLYN","MANHATTAN","STATEN ISLAND","QUE
 |Unspecified|224127|
 +-----------+------+
 '''
+
+#Finding invalid Agency Acronyms.
+df.where(length(col('Agency')) > 0).select(col('Agency')).filter(col('Agency').rlike('\\b[A-Z]{3}\\b|\\b[A-Z]{4}\\b|\\b[A-Z]{5}\\b')!=True).groupBy('Agency').count().show()
+# found that the invalid ones are 3-1-1 which is a valid agency acronym. Hence no outliers.
+
 
