@@ -10,6 +10,8 @@ df = sql_c.read.format('com.databricks.spark.csv').options(header='true', infers
 
 
 
+'''<-----------------------Finding invalid values and replacing a few needed for the next Part--------------------------->'''
+
 #Finding invalid Zip Codes
 df.where(length(col('Incident Zip')) > 0).select(col('Incident Zip')).filter(col('Incident Zip').rlike('^\d{5}(?:[-\s]\d{4})?$')!=True).groupBy('Incident Zip').count().show()
 '''
@@ -56,3 +58,8 @@ df.where(length(col('Community Board')) > 0).select(col('Community Board')).filt
 #found no invalid entries
 
 
+'''<-----------------------Finding surprising entries analysed by count of occurence--------------------------->'''
+
+df.select('Complaint Type').groupBy('Complaint Type').count().sort('count').show()
+df.select('Address Type').groupBy('Address Type').count().sort('count').show()
+df.select('Location Type').groupBy('Location Type').count().sort('count').show()
