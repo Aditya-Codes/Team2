@@ -1,7 +1,7 @@
 import numpy as np
 from pyspark import SparkContext
 sc =SparkContext()
-
+from pyspark.sql.functions import when
 from pyspark.sql import SQLContext
 sql_c = SQLContext(sc)
 from pyspark.sql.functions import count,length,col
