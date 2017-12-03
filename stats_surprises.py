@@ -57,3 +57,6 @@ df.where(length(col('Community Board')) > 0).select(col('Community Board')).filt
 df.select('Complaint Type').groupBy('Complaint Type').count().sort('count').show()
 df.select('Address Type').groupBy('Address Type').count().sort('count').show()
 df.select('Location Type').groupBy('Location Type').count().sort('count').show()
+
+#Surprisingly high frequency entries
+df.groupBy('Created Date').count().orderBy('count',ascending=False).show()
