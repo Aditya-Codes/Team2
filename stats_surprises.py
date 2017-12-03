@@ -46,6 +46,11 @@ df.where(length(col('Agency')) > 0).select(col('Agency')).filter(col('Agency').r
 df.where(length(col('Descriptor')) > 0).select(col('Descriptor')).filter(col('Descriptor').rlike('^(?:[A-Z]|[a-z]|[0-9]|&|/|\s|\(|\)|,|\+|\.|"|-|\:)+$')!=True).groupBy('Descriptor').count().show()
 #found no invalid entries
 
-#Finding invalid 
+#Finding invalid Community Board Entries.
 df.where(length(col('Community Board')) > 0).select(col('Community Board')).filter(col('Community Board').rlike("^(?:[A-Za-z0-9 ])+$")!=True).groupBy('Community Board').count().show()
 #found no invalid entriies
+
+# Surpisingly low frequency entries.
+df.select('Complaint Type').groupBy('Complaint Type').count().sort('count').show()
+df.select('Address Type').groupBy('Address Type').count().sort('count').show()
+df.select('Location Type').groupBy('Location Type').count().sort('count').show()
