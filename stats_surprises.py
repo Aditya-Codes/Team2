@@ -8,6 +8,9 @@ from pyspark.sql.functions import count,length,col,when,isnan
 
 df = sql_c.read.format('com.databricks.spark.csv').options(header='true', inferschema='true').load('/user/jzm218/new_311.csv')
 
+# Null valued statistics
+df.select([count(when(col(c).isin("N/A","","Unspecified"), c)).alias(c) for c in df.columns]).show()
+
 #Finding invalid Zip Codes
 df.where(length(col('Incident Zip')) > 0).select(col('Incident Zip')).filter(col('Incident Zip').rlike('^\d{5}(?:[-\s]\d{4})?$')!=True).groupBy('Incident Zip').count().show()
 '''
