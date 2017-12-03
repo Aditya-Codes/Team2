@@ -35,14 +35,15 @@ drop_list = ['Landmark',
 
 df = df.select([name for name in df.schema.names if name not in drop_list])
 
+#Replacing invalid Zipcodes with N/A Zip codes should either be 5 digits or 5 digits followed by 4 digits.
+df = df.withColumn('Incident Zip', when(col('Incident Zip').rlike('^\d{5}(?:[-\s]\d{4})?$')!= True, 'N/A').otherwise(df['Incident Zip']))
 
 #Replacing Null values with "N/A"
 for x in df.schema.names:
 	# Basic replacement 
 	df = df.withColumn(x, when(col(x).isin("", "Unspecified", "0 Unspecified") != True, col(x)).otherwise('N/A'))  
 
-# NA Statistics
-df.select([count(when(col(c).isin('N/A'), c)).alias(c) for c in df.columns]).show()
+
 
 df.write.format('com.databricks.spark.csv').options(header='true').save('/user/sdv267/cleaned_311.csv') 
 
