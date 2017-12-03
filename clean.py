@@ -44,7 +44,7 @@ for x in df.schema.names:
 	df = df.withColumn(x, when(col(x).isin("", "Unspecified", "0 Unspecified") != True, col(x)).otherwise('N/A'))  
 
 
-
+#writing cleaned dataframes onto a csv for comparision and Analysis phase.
 df.write.format('com.databricks.spark.csv').options(header='true').save('/user/sdv267/cleaned_311.csv') 
 
 
