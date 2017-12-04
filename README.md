@@ -31,7 +31,7 @@ Datasets:Complaints 311 (2009-2016) Download:
 
 *3. Change the paths for input file and output file in both clean.py and stats_surprises.py*
   
-*4. Run the scripts: *
+*4. Run the scripts:*
  
       Cleaning Script - pyspark --packages com.databricks:spark-csv_2.10:1.4.0 clean.py
       
