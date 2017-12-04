@@ -5,7 +5,9 @@ Big Data Analysis Course Project - Nikhil Reddy, John Martinez, William Herrera
 Datasets:
 
 Complaints 311 (2009-2016) Download:
+
 (2010-2016) https://data.cityofnewyork.us/Social-Services/311/wpe2-h2i5
+
 (2009)      https://data.cityofnewyork.us/Social-Services/new-311/9s88-aed8
 
 Cleaning tasks:
@@ -22,19 +24,24 @@ Statistics and Surprising Events:
  *RUNNING THE SCRIPTS*
 
  1. Copy and move the scripts onto your HPC cluster.
+ 
     scp <filename>.py dumbo:/home/<netid>/ [Local Terminal]
 
  2. Move the csv file onto HDFS from the dumbo.
+ 
     scp <filename>.csv dumbo:/home/<netid>/ [Local Terminal]
     hfs -put <filename>.csv [HPC Cluster terminal]
 
  3. Change the paths for input file and output file in both clean.py and stats_surprises.py
   
  4. Run the scripts: 
+ 
       Cleaning Script - pyspark --packages com.databricks:spark-csv_2.10:1.4.0 clean.py
+      
       Statistics & Surprises - pyspark --packages com.databricks:spark-csv_2.10:1.4.0 stats_surprises.py
  
  5. Gather cleaned csv onto your local machine.
+ 
     hfs -getmerge <output-filename>.csv <output-filename>.csv [HPC Cluster Terminal]
     scp dumbo:/home/<netid>/<output-filename>.csv <output-filename>.csv [Local Terminal]
   
