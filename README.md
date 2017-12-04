@@ -32,9 +32,9 @@ Complaints 311 (2009-2016) Download:
     scp <filename>.csv dumbo:/home/<netid>/ [Local Terminal]
     hfs -put <filename>.csv [HPC Cluster terminal]
 
- #3. Change the paths for input file and output file in both clean.py and stats_surprises.py
+# 3. Change the paths for input file and output file in both clean.py and stats_surprises.py
   
- #4. Run the scripts: 
+# 4. Run the scripts: 
  
       Cleaning Script - pyspark --packages com.databricks:spark-csv_2.10:1.4.0 clean.py
       
