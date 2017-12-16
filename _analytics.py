@@ -19,4 +19,9 @@ df = df.withColumn(x, when(col(x).like('%Water%') != True, col(x)).otherwise('WA
 # Construction Group
 df = df.withColumn(x, when(col(x).isin('GENERAL CONSTRUCTION', 'General Construction/Plumbing', 'Construction', 'CONSTRUCTION') != True, col(x)).otherwise('CONSTRUCTION'))
 
+# Plumbing Group
+df = df.withColumn(x, when(col(x).isin('Plumbing', 'PLUMBING') != True, col(x)).otherwise('PLUMBLING'))
+
+# Paint Group
+df = df.withColumn(x, when(col(x).isin('PAINT - PLASTER', 'PAINT/PLASTER') != True, col(x)).otherwise('PAINT'))
 '''
