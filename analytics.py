@@ -29,6 +29,27 @@ df.groupBy('year').count().show()
 |2017|2238425|
 +----+-------+
 '''
+# Number of complaints grouped by Months
+df = df.withColumn('month_created', col('Created Date').substr(0,2))
+df.groupBy('month_created').count().show()
+'''
++-------------+-------+                                                         
+|month_created|  count|
++-------------+-------+
+|           01|1714672|
+|           02|1515579|
+|           03|1603257|
+|           04|1305673|
+|           05|1365630|
+|           06|1406936|
+|           07|1404212|
+|           08|1356323|
+|           09|1325166|
+|           10|1426312|
+|           11|1408483|
+|           12|1212192|
++-------------+-------+
+'''
 
 # Number of complaints per Complaint Type
 df_complaints=df.groupBy('Complaint Type').count().orderBy('count',ascending=False)
