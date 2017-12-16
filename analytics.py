@@ -55,6 +55,25 @@ df.groupBy('month_created').count().show()
 df_complaints=df.groupBy('Complaint Type').count().orderBy('count',ascending=False)
 df_complaints.write.format('com.databricks.spark.csv').save('/user/sdv267/complaint.csv')
 
+# Grouping Like Complaint types
+# Noise Group
+df = df.withColumn(x, when(col(x).like('%Noise%') != True, col(x)).otherwise('NOISE'))
+# Street Group
+df = df.withColumn(x, when(col(x).like('%Street%') != True, col(x)).otherwise('STREET'))
+# Heat Group
+df = df.withColumn(x, when(col(x).isin('HEAT/HOT WATER','HEATING', 'Non-Residential Heat', 'Sidewalk Cafe Heater') != True, col(x)).otherwise('HEAT'))
+# Water group
+df = df.withColumn(x, when(col(x).like('%Water%') != True, col(x)).otherwise('WATER'))
+# Construction Group
+df = df.withColumn(x, when(col(x).isin('GENERAL CONSTRUCTION', 'General Construction/Plumbing', 'Construction', 'CONSTRUCTION') != True, col(x)).otherwise('CONSTRUCTION'))
+# Plumbing Group
+df = df.withColumn(x, when(col(x).isin('Plumbing', 'PLUMBING') != True, col(x)).otherwise('PLUMBLING'))
+# Paint Group
+df = df.withColumn(x, when(col(x).isin('PAINT - PLASTER', 'PAINT/PLASTER') != True, col(x)).otherwise('PAINT'))
+df_complaints=df.groupBy('Complaint Type').count().orderBy('count',ascending=False)
+df_complaints.write.format('com.databricks.spark.csv').save('/user/sdv267/complaint.csv')
+
+
 # Freqency of complaints closing duration
 from pyspark.sql import functions as F
 df = df.withColumn('date_created', col('Created Date').substr(0,10))
@@ -75,4 +94,3 @@ df = df.withColumn('DayZone', when(col('hour_created').isin("12 PM","1 PM","2 PM
 df = df.withColumn('DayZone', when(col('hour_created').isin("8 PM","9 PM","10 PM","11 PM","12 AM","1 AM","2 AM","3 AM","4 AM")== True, 'night').otherwise(df['DayZone']))
 df.groupBy('DayZone').count().show()            
                    
-
