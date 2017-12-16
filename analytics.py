@@ -64,3 +64,9 @@ timeDiff = (F.unix_timestamp('date_closed', format=timeFmt) - F.unix_timestamp('
 df = df.withColumn("Duration",timediff)
 df = df.withColumn("DayDuration", df.Duration/86400)
 df.groupBy('DayDuration').count().orderBy('count',ascending=False).show()
+
+
+# Distribution of Complaints by time of day.
+df = df.withColumn('hour_created',F.concat(F.col('Created Date').substr(12,2), F.lit(' '), F.col('Created Date').substr(21,2)))
+df.groupBy('hour_created').count().show()
+
