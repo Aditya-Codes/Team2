@@ -11,7 +11,7 @@ df = sql_c.read.format('com.databricks.spark.csv').options(header='true', infers
 # Number of complaints per Borough
 df.groupBy('Borough').count().show()
 
-#Number of complaints per year
+# Number of complaints per year
 df = df.withColumn('year', col('Created Date').substr(7,4))
 df.groupBy('year').count().show()
 '''
@@ -30,4 +30,6 @@ df.groupBy('year').count().show()
 +----+-------+
 '''
 
-
+# Number of complaints per Complaint Type
+df_complaints=df.groupBy('Complaint Type').count().orderBy('count',ascending=False)
+df_complaints.write.format('com.databricks.spark.csv').save('/user/sdv267/complaint.csv')
