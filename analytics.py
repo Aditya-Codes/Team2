@@ -55,9 +55,12 @@ df.groupBy('month_created').count().show()
 df_complaints=df.groupBy('Complaint Type').count().orderBy('count',ascending=False)
 df_complaints.write.format('com.databricks.spark.csv').save('/user/sdv267/complaint.csv')
 
-# Freqency of complaints closing
+# Freqency of complaints closing duration
 from pyspark.sql import functions as F
-timeFmt = "MM/dd/YYYY HH:mm:ss"
-timeDiff = (F.unix_timestamp('Closed Date', format=timeFmt) - F.unix_timestamp('Created Date', format=timeFmt))
-df = df.withColumn("Duration", timeDiff)
-df.groupBy('Duration').count().orderBy('count',ascending=False).show()
+df = df.withColumn('date_created', col('Created Date').substr(0,10))
+df = df.withColumn('date_closed', col('Closed Date').substr(0,10))
+timeFmt = "MM/dd/YYYY"
+timeDiff = (F.unix_timestamp('date_closed', format=timeFmt) - F.unix_timestamp('date_created', format=timeFmt))
+df = df.withColumn("Duration",timediff)
+df = df.withColumn("DayDuration", df.Duration/86400)
+df.groupBy('DayDuration').count().orderBy('count',ascending=False).show()
