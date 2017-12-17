@@ -51,6 +51,34 @@ df.groupBy('month_created').count().show()
 +-------------+-------+
 '''
 
+# Number of complaints closed per year
+df = df.withColumn('year_closed', col('Closed Date').substr(7,4))
+df.groupBy('year_closed').count().orderBy('count',ascending=False).show()
+'''
++-----------+-------+                                                           
+|year_closed|  count|
++-----------+-------+
+|       2016|2303123|
+|       2015|2243518|
+|       2017|2193101|
+|       2014|2057229|
+|       2010|1856035|
+|       2013|1799583|
+|       2011|1792802|
+|       2012|1730636|
+|           | 584559|
+|       2009| 477384|
+|       1900|   6201|
+|       2008|    235|
+|       2001|      8|
+|       2000|      4|
+|       2201|      3|
+|       2019|      3|
+|       2006|      3|
+|       3009|      1|
+|       1939|      1|
++-----------+-------+
+'''
 # Number of complaints per Complaint Type
 df_complaints=df.groupBy('Complaint Type').count().orderBy('count',ascending=False)
 df_complaints.write.format('com.databricks.spark.csv').save('/user/sdv267/complaint.csv')
