@@ -10,6 +10,18 @@ df = sql_c.read.format('com.databricks.spark.csv').options(header='true', infers
 
 # Number of complaints per Borough
 df.groupBy('Borough').count().show()
+'''
++-------------+-------+                                                         
+|      Borough|  count|
++-------------+-------+
+|          N/A|1574599|
+|    MANHATTAN|3256604|
+|       QUEENS|3698679|
+|STATEN ISLAND| 808380|
+|     BROOKLYN|4819634|
+|        BRONX|2886539|
++-------------+-------+
+'''
 
 # Number of complaints per year
 df = df.withColumn('year', col('Created Date').substr(7,4))
