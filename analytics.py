@@ -88,8 +88,18 @@ df.groupBy('DayDuration').count().orderBy('count',ascending=False).show()
 # Distribution of Complaints by time of day.
 df = df.withColumn('hour_created',F.concat(F.col('Created Date').substr(12,2), F.lit(' '), F.col('Created Date').substr(21,2)))
 #df.groupBy('hour_created').count().show()
-df = df.withColumn('DayZone', when(col('hour_created').isin("5 AM","6 AM","7 AM","8 AM","9 AM","10 AM","11 AM")== True, 'morning'))
-df = df.withColumn('DayZone', when(col('hour_created').isin("12 PM","1 PM","2 PM","3 PM","4 PM","5 PM","6 PM","7 PM")== True, 'noon/evening').otherwise(df['DayZone']))
-df = df.withColumn('DayZone', when(col('hour_created').isin("8 PM","9 PM","10 PM","11 PM","12 AM","1 AM","2 AM","3 AM","4 AM")== True, 'night').otherwise(df['DayZone']))
-df.groupBy('DayZone').count().show()            
+df = df.withColumn('DayZone', when(col('hour_created').isin("05 AM","06 AM","07 AM","08 AM","09 AM","10 AM","11 AM")== True, 'morning'))
+df = df.withColumn('DayZone', when(col('hour_created').isin("12 PM","01 PM","02 PM","03 PM","04 PM","05 PM","06 PM","07 PM")== True, 'noon/evening').otherwise(df['DayZone']))
+df = df.withColumn('DayZone', when(col('hour_created').isin("08 PM","09 PM","10 PM","11 PM","12 AM","01 AM","02 AM","03 AM","04 AM")== True, 'night').otherwise(df['DayZone']))
+df.groupBy('DayZone').count().show()        
+'''
++------------+-------+                                                          
+|     DayZone|  count|
++------------+-------+
+|       night|7135692|
+|     morning|4063862|
+|        null|      2|
+|noon/evening|5844881|
++------------+-------+
+'''
                    
