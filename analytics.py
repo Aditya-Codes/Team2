@@ -84,6 +84,7 @@ df_complaints=df.groupBy('Complaint Type').count().orderBy('count',ascending=Fal
 df_complaints.write.format('com.databricks.spark.csv').save('/user/sdv267/complaint.csv')
 
 # Grouping Like Complaint types
+x= 'Complaint Type'
 # Noise Group
 df = df.withColumn(x, when(col(x).like('%Noise%') != True, col(x)).otherwise('NOISE'))
 # Street Group
@@ -98,8 +99,26 @@ df = df.withColumn(x, when(col(x).isin('GENERAL CONSTRUCTION', 'General Construc
 df = df.withColumn(x, when(col(x).isin('Plumbing', 'PLUMBING') != True, col(x)).otherwise('PLUMBLING'))
 # Paint Group
 df = df.withColumn(x, when(col(x).isin('PAINT - PLASTER', 'PAINT/PLASTER') != True, col(x)).otherwise('PAINT'))
+
 df_complaints=df.groupBy('Complaint Type').count().orderBy('count',ascending=False)
-df_complaints.write.format('com.databricks.spark.csv').save('/user/sdv267/complaint.csv')
+df_complaints.write.format('com.databricks.spark.csv').save('/user/sdv267/complaint_grouped.csv')
+df.groupBy('Complaint Type').count().orderBy('count',ascending=False).show(10)
+'''
++--------------------+-------+                                                  
+|      Complaint Type|  count|
++--------------------+-------+
+|               NOISE|2476943|
+|                HEAT|1754711|
+|              STREET|1695323|
+|        CONSTRUCTION| 819432|
+|           PLUMBLING| 678184|
+|    Blocked Driveway| 645953|
+|               PAINT| 629845|
+|               WATER| 581095|
+|     Illegal Parking| 542980|
+|Traffic Signal Co...| 366360|
++--------------------+-------+
+'''
 
 
 # Freqency of complaints closing duration
