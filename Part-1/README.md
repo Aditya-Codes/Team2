@@ -9,7 +9,7 @@
   3. Find surprisingly low frequency entries to find any odd suspicious entries.
   4. Find surprisingly high frequency entries.
   
-# *RUNNING THE SCRIPTS*
+# RUNNING THE SCRIPTS
 
 *1. Copy and move the scripts onto your HPC cluster.*
  
