@@ -38,6 +38,10 @@ df = df.select([name for name in df.schema.names if name not in drop_list])
 #Replacing invalid Zipcodes with N/A Zip codes should either be 5 digits or 5 digits followed by 4 digits.
 df = df.withColumn('Incident Zip', when(col('Incident Zip').rlike('^\d{5}(?:[-\s]\d{4})?$')!= True, 'N/A').otherwise(df['Incident Zip']))
 
+# Replacing invalid closed dates (before 2009) with N/A
+years = [str(i) for i in range(2009, 2018)]
+df = df.withColumn('Closed Date',when( col('Closed Date').substr(7,4).isin(years), col('Closed Date')).otherwise('N/A'))
+
 #Replacing Null values with "N/A"
 for x in df.schema.names:
 	# Basic replacement 
