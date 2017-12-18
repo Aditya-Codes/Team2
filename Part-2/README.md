@@ -9,7 +9,7 @@
   7. Trends in time taken to close a complaint.
   8. Distribution of Complaints by time of day.(morning, noon and night)
   
-# *RUNNING THE SCRIPTS*
+# Running The Scripts
 
 *1. Copy and move the scripts onto your HPC cluster.*
  
