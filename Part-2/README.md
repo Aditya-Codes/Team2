@@ -8,6 +8,7 @@
   6. Grouping complaints of similar type and finidng distribution.
   7. Trends in time taken to close a complaint.
   8. Distribution of Complaints by time of day.(morning, noon and night)
+  9. Distribution of Complaint Types by Borough.
   
 # Running The Scripts
 
