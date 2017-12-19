@@ -36,12 +36,13 @@ df = df.withColumn(x, when(col(x).isin('PAINT - PLASTER', 'PAINT/PLASTER') != Tr
 #df_complaints.write.format('com.databricks.spark.csv').save('/user/sdv267/complaint_grouped.csv')
 df.groupBy('Complaint Type').count().orderBy('count',ascending=False).show(10)
 
-boroughs = ["BRONX","BROOKLYN","MANHATTAN","STATEN ISLAND","QUEENS"]
-
-for br in boroughs:
-	brdf = df.filter(col('Complaint Type').isin(br)).groupBy('Complaint Type').count().orderBy('count',ascending=False)
-	brdf.write.format('com.databricks.spark.csv').save('/user/sdv267/complaint_grouped'+br+'.csv')
-	brdf.show()
+x = "Borough"
+      
+df.filter(col(x).isin("MANHATTAN")).groupBy('Complaint Type').count().orderBy('count',ascending=False).show()
+df.filter(col(x).isin("BROOKLYN")).groupBy('Complaint Type').count().orderBy('count',ascending=False).show()
+df.filter(col(x).isin("BRONX")).groupBy('Complaint Type').count().orderBy('count',ascending=False).show()
+df.filter(col(x).isin("STATEN ISLAND")).groupBy('Complaint Type').count().orderBy('count',ascending=False).show()
+df.filter(col(x).isin("QUEENS")).groupBy('Complaint Type').count().orderBy('count',ascending=False).show()
 	
 
 
